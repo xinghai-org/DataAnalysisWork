@@ -1,9 +1,9 @@
-# DataAnalysisWork
+# 1.   DataAnalysisWork
 数据分析期末作业
 
 github地址：https://github.com/xinghai-org/DataAnalysisWork
 
-## 项目目录结构
+## 1. 1   项目目录结构
 
 ```
 │  .gitignore
@@ -36,7 +36,7 @@ github地址：https://github.com/xinghai-org/DataAnalysisWork
 └─chapter9
 ```
 
-## 项目目录解释
+## 1.2    项目目录解释
 
 - .gitignore	git的配置文件，不用管
 -  DataAnalysisWork.code-workspace      vscode的配置文件，不用管
@@ -47,7 +47,7 @@ github地址：https://github.com/xinghai-org/DataAnalysisWork
 - chapter8       第八章项目的文件路径
 - chapter9       第九章项目的文件路径
 
-## 搭建项目环境
+## 1.3    搭建项目环境
 
 项目下载后，自行搭建python，进入项目根目录，输入以下命令安装必要的库
 
@@ -57,7 +57,7 @@ pip install -r .\requirements.txt
 
 
 
-# 二手房数据分析预测系统
+# 2.   二手房数据分析预测系统
 
 第七章目录结构
 
@@ -91,11 +91,11 @@ pip install -r .\requirements.txt
 - data 这里里面就一个csv文件，这个csv文件就是项目要处理的源数据
 - img       这里的图片是MainWindows.py 界面里面需要用到的图片
 
-## 运行项目
+## 2.1   运行项目
 
 打开`main.py`运行`main.py`
 
-## main文件
+## 2.2   main文件
 
 main文件导入了以下模块
 
@@ -122,7 +122,7 @@ class Main(QMainWindow,Ui_MainWindow):
 - `super().__init__()`,运行父类的init方法，就是运行QMainWindow类的init方法，应为使用这个类也需要先初始化，不然会报错
 - self.setupUi(self)，这个self表示自己，自己的setupUi函数，我们没有自己定义这个函数也可以使用，这是应为继承了`(QMainWindow,Ui_MainWindow)`这两个类，这个方法是`Ui_MainWindow`类里面的，应为我们继承了，所以可以直接调用
 
-**self.button_connect()**函数内容
+## 2.3   **button_connect**函数内容
 
 ```
     # 将按钮绑定函数
@@ -136,7 +136,7 @@ class Main(QMainWindow,Ui_MainWindow):
 
 这个函数里的`self.btn_*`是UiMainWindow类里面的属性，表示按钮，可以直接调用，每一句话的作用就是讲这些按钮绑定函数，只要点击按钮就执行函数
 
-**class函数体**
+## 2.4   **class函数体**
 
 ```python
     # 显示各区二手房分析图
