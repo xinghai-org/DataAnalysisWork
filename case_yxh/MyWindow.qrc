@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="bakground">
+    <file>img/bj.jpg</file>
+    <file>img/label.svg</file>
+  </qresource>
+</RCC>

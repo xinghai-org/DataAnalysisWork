@@ -1,3 +1,4 @@
 *.code-workspace
 temp/
 test/
+__pycache__/
