@@ -14,6 +14,9 @@ class MyWindow(QMainWindow,Ui_MainWindow):
         # 绑定函数
         self.function = DataAnalysis()
         self.to_connect(self.function)
+        
+    def closeEvent(self, event):
+        sys.exit()
     
     def to_connect(self,f):
         self.toolButton_4.clicked.connect(f.gongzi_lzl)
