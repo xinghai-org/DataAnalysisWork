@@ -2,6 +2,7 @@ from MyWindow import *
 from PyQt5.QtWidgets import QMainWindow,QApplication
 from PyQt5.QtCore import Qt,QPoint
 from analysis import DataAnalysis
+import sys
 class MyWindow(QMainWindow,Ui_MainWindow):
 
     def __init__(self):
@@ -14,7 +15,7 @@ class MyWindow(QMainWindow,Ui_MainWindow):
         # 绑定函数
         self.function = DataAnalysis()
         self.to_connect(self.function)
-        
+
     def closeEvent(self, event):
         sys.exit()
     
