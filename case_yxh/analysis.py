@@ -77,7 +77,7 @@ class DataAnalysis:
     def gongl(self):
         data = self.data[['工龄', '离职']]
         result = data.sort_values('工龄', ascending=False).groupby('工龄').mean()
-        
+
         plt.figure(figsize=(12, 6))
         plt.plot(result.index.astype('str'), result['离职'], marker='o', color='#1E90FF', label='离职率', alpha=0.9)
         plt.fill_between(result.index.astype('str'), result['离职'], color='#87CEEB', alpha=0.3)

@@ -139,30 +139,30 @@ class Main(QMainWindow,Ui_MainWindow):
 ## 2.4   **class函数体**
 
 ```python
-    # 显示各区二手房分析图
-    def show_average_price(self):
-        region,average_price = house_analisis.get_average_price()
-        chart.average_price_bar(region,average_price,'各区二手房价分析')
+# 显示各区二手房分析图
+def show_average_price(self):
+    region,average_price = house_analisis.get_average_price()
+    chart.average_price_bar(region,average_price,'各区二手房价分析')
 
-    # 各区二手房数量所占比例
-    def show_house_number(self):
-        region,percentage = house_analisis.get_house_number()
-        chart.pie_chart(percentage,region,'各区二手房数量所占比例')
+# 各区二手房数量所占比例
+def show_house_number(self):
+    region,percentage = house_analisis.get_house_number()
+    chart.pie_chart(percentage,region,'各区二手房数量所占比例')
 
-    # 全市二手房装修程度分析
-    def show_renovation(self):
-        atype,number = house_analisis.get_renovation()
-        chart.renovation_bar(atype,number,'全市二手房装修程度分析')
-    
-    # 热门户型均价分析
-    def show_type(self):
-        type,price = house_analisis.get_house_type()
-        chart.bar(price,type,'热门户型均价分析')
-    
-    # 显示二手房预测图
-    def show_total_price(self):
-        true_price,forecast_price = house_analisis.get_price_forecast()
-        chart.broken_line(true_price,forecast_price,'二手房价预测')
+# 全市二手房装修程度分析
+def show_renovation(self):
+    atype,number = house_analisis.get_renovation()
+    chart.renovation_bar(atype,number,'全市二手房装修程度分析')
+
+# 热门户型均价分析
+def show_type(self):
+    type,price = house_analisis.get_house_type()
+    chart.bar(price,type,'热门户型均价分析')
+
+# 显示二手房预测图
+def show_total_price(self):
+    true_price,forecast_price = house_analisis.get_price_forecast()
+    chart.broken_line(true_price,forecast_price,'二手房价预测')
 ```
 
 - 这些函数无一例外都被绑定到了按钮中，只要点击按钮就会执行对应的函数
@@ -326,3 +326,185 @@ app.exec()
 
 
 这些分析结果有助于识别学生群体中抑郁症状的高风险群体，指导心理健康干预工作。通过针对不同因素（如学习压力、经济压力、年龄、饮食习惯等）采取有针对性的干预措施，可以有效减少学生的抑郁风险，改善其心理健康状态。通过聚类分析的结果，也能帮助制定个性化的心理健康支持方案，精准定位需要帮助的群体。
+
+记忆已更新
+
+你可以按以下方式美化并添加总结内容，以提升项目的清晰度和可读性。
+
+------
+
+# 4. 员工离职情况分析
+
+## 4.1 项目目录
+
+```
+kotlin复制代码E:.
+│  analysis.py
+│  main.py
+│  MyWindow.py
+│  MyWindow.qrc
+│  MyWindow.ui
+│  MyWindow_rc.py
+│
+├─data
+│      员工离职分析.xlsx
+│
+└─img
+        bj.jpg
+        label.svg
+```
+
+- **main.py**：本文件为项目的入口，启动程序后会进入主界面。
+- **MyWindow.py**：此文件为UI文件转换后的Python代码，包含了整个程序的图形界面组件和交互逻辑。
+- **MyWindow.ui**：采用Qt Designer工具设计的UI文件，描述了界面布局和组件。
+- **MyWindow.qrc**：资源文件，存储了UI界面中涉及的图片资源的路径信息。
+- **MyWindow_rc.py**：自动生成的Python文件，包含了通过`qrc`文件嵌入的所有图片的二进制数据。
+- **data**：包含用于分析的员工离职数据的Excel文件。
+- **img**：存储项目中使用的静态图片资源。
+
+## 4.2 main.py文件
+
+程序的主要逻辑体现在`main.py`文件中，结构如下：
+
+```
+python复制代码from MyWindow import *
+from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtCore import Qt, QPoint
+from analysis import DataAnalysis
+
+class MyWindow(QMainWindow, Ui_MainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)  # 设置界面
+        self.function = DataAnalysis()  # 创建数据分析对象
+        self.to_connect(self.function)  # 绑定UI控件和分析函数
+
+    def to_connect(self, f):
+        # 为按钮绑定相应的分析函数
+        self.toolButton_4.clicked.connect(f.gongzi_lzl)
+        self.toolButton_2.clicked.connect(f.yxgz)
+        self.toolButton_3.clicked.connect(f.gcsl)
+        self.toolButton.clicked.connect(f.gongl)
+        self.toolButton_6.clicked.connect(f.sjsl)
+
+if __name__ == '__main__':
+    app = QApplication([])  # 启动Qt应用
+    win = MyWindow()  # 创建并显示主窗口
+    win.show()
+    app.exec()  # 运行应用
+```
+
+1. **MyWindow类**：继承自`Ui_MainWindow`，封装了界面的所有控件和事件处理逻辑。
+2. **构造函数**：初始化时创建`DataAnalysis`类的实例，负责所有数据分析相关的操作。
+3. **to_connect方法**：将UI控件（如按钮）与数据分析函数相连接，确保用户交互时能触发相应的分析逻辑。
+
+## 4.3 数据分析：数据处理
+
+在`analysis.py`文件中，`DataAnalysis`类负责数据的清洗和预处理。
+
+1. 使用`pandas`库读取`员工离职分析.xlsx`文件。
+2. 对原始数据进行清洗，去除工作时间为零的记录，确保数据的准确性和完整性。
+
+![image-20241224195541970](https://r2.xinghai2524.us.kg/Typora/17350413470245125.png)
+
+
+
+数据清洗是分析的第一步，目的是确保后续分析基于干净、可靠的数据源。去除无效或异常数据，能够有效提高分析结果的可信度和精度。
+
+## 4.4 数据分析：工资与离职关系
+
+在`gongzi_lzl`方法中，分析了员工工资水平与离职之间的关系。
+
+
+
+1. 通过筛选，只保留已离职员工的数据，并提取出工资和离职状态的相关列。
+2. 将数据按工资水平进行分组，并统计每个工资段对应的离职情况。
+3. 使用`matplotlib`绘制离职率与工资水平的关系图，直观展示分析结果。
+
+![image-20241224202450332](.README_file/17350430958675027.png)
+
+
+
+从结果中可以明显看出，工资水平较高的员工，其离职率相对较低。这一结论对于公司来说具有重要意义，尤其是在制定薪酬策略时，可以考虑通过提供更具竞争力的薪资来减少员工流失，从而提高员工的留任率。
+
+## 4.5 数据分析：工资与其他指标的关系
+
+在`yxgz`方法中，进一步分析了员工工资与其他关键指标（如考核得分、工龄、满意度等）之间的关系。
+
+
+
+1. 按工资水平对员工进行分组，计算每个工资段的考核得分、工龄和满意度的均值。
+2. 使用`matplotlib`可视化分析结果，展示不同工资段的员工在这些指标上的表现。
+
+![image-20241224204028941](https://r2.xinghai2524.us.kg/Typora/17350444402757473.png)
+
+
+
+高工资员工不仅在工龄和考核得分上表现更为突出，同时其工作满意度也明显高于低薪员工。这表明公司可以通过优化薪酬结构，提升员工的工作表现和整体满意度，从而推动更高的生产力和忠诚度。
+
+## 4.6 数据分析：工资与工程数量及离职的关系
+
+在`gcsl`方法中，分析了工资水平与工程数量及离职之间的关系。
+
+
+
+1. 从原始数据中筛选出工资、工程数量和离职状态三个关键字段。
+2. 按工资分组，计算每个工资段的工程数量和离职率的平均值。
+3. 使用`matplotlib`展示分析结果。
+
+![image-20241224204710629](https://r2.xinghai2524.us.kg/Typora/1735044436798724.png)
+
+
+
+分析结果表明，高薪员工的离职率较低，并且分配的工程数量较少。较低薪资员工可能面临更多的工作压力，这可能是他们选择离职的一个因素。公司可以通过调整薪酬结构，减轻员工的工作压力，同时提高他们的工作满意度。
+
+## 4.7 数据分析：工龄与离职的关系
+
+在`gongl`方法中，分析了员工的工龄与离职之间的关系。
+
+
+
+1. 筛选数据，仅保留工龄和离职状态字段。
+2. 按工龄对数据进行分组，并计算每个工龄段的离职率。
+3. 使用`matplotlib`展示分析结果，直观展现不同工龄段员工的离职率。
+
+![image-20241224205338684](.README_file/1735044823294143.png)
+
+
+
+结果显示，员工的离职率随着工龄的增加逐渐上升，尤其是在工作年限达到五年时，离职率达到顶峰。这一发现表明，公司应特别关注工龄较长员工的工作状态，及时采取有效的干预措施，以降低离职风险。
+
+## 4.8 数据分析：随机森林预测
+
+为了更深入地分析员工离职的影响因素，我们采用了随机森林算法对员工离职进行预测。
+
+### 数据预处理：
+
+1. 对工资字段进行标签编码，将其转化为整数值，以便进行机器学习模型的训练。
+2. 将数据集划分为训练集（80%）和测试集（20%），以验证模型的预测效果。
+
+```
+python复制代码from sklearn.preprocessing import LabelEncoder
+data['工资'] = LabelEncoder().fit_transform(data['工资'])
+X = data.drop(columns=['离职'])
+```
+
+### 模型训练与预测：
+
+我们使用随机森林模型对训练数据进行训练，并对测试集数据进行预测。
+
+![image-20241224221824275](.README_file/17350499094780436-1735050723552-27.png)
+
+### 结果评估：
+
+通过对比预测值和实际值，我们得到了99%的准确率，表明模型具有极高的预测准确性。
+
+![image-20241224222351503](.README_file/17350502344112327-1735050723552-29.png)
+
+
+
+使用随机森林算法可以有效地预测员工的离职倾向，准确率高达99%。这一结果不仅验证了数据分析模型的有效性，也为公司提供了一种精确的员工流失预测工具，帮助人力资源部门提前识别潜在的离职风险，制定相应的留人策略。
+
+------
+
+通过本次数据分析，结合薪酬、工龄、工作压力等多维度因素，深入探讨了员工离职的主要影响因素。基于这些数据驱动的见解，企业可以制定更具针对性的管理策略，从而降低员工流失率，提升整体的工作满意度和公司稳定性。
